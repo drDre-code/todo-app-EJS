@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="grid-container">
+      <header>
+        <%- include('./partials/header'); %>
+      </header>
+      <main>
+        <div>
+          <h1>Welcome <%=name%>,</h1>
+          <div> Percentage completion: </div>
+          <form>
+              <div class="todo">
+                  <div class="addbutton">
+                      <button onClick="todoAdd(event)"> Add New Todo</button>
+                  </div>
+
+                  <div class="todoinput addbutton">
+                      <input id="todoInput" type="text" placeholder="Enter todo" required/>
+                      <button onClick="todoSubmit(event)" type="submit">Submit</button>
+                  </div>
+              </div>
+          </form>
+          <form>
+            <% if (todos) { %>
+            <% const info = todos.map((value, index) => { %>
+                <div id="<%= index %>" class="todo">
+                          <div class="drey">
+                              <div class= "<%= `content${value._id}` %>" >
+
+                                  <span class="checker"><i class="<%= value.status ? 'fa fa-check-circle' : 'fa fa-circle-o' %>" ></i></span>
+                                  <span class="content" ><%= value.message %></span>
+                              </div>
+
+                              <div class="updateinput addbutton" id="<%=`update${value._id}`%>">
+                                  <div>
+                                      <input class="<%= `input${value._id}` %>" type="text" placeholder="<%= value.message %>" />
+                                      <div class="status" id="<%= `done${value._id}` %>"> Status:
+
+                                          <input type="radio" name="status" value="done" />
+                                          <label htmlFor="done">Done</label>
+                                          <input type="radio" name="status" value="not done" />
+                                          <label htmlFor="not done">Not Done</label>
+
+                                      </div>
+                                  </div>
+                                  <div>
+                                      <button onClick="updateTodo(event,'<%= value._id %>')" >Submit</button>
+                                  </div>
+
+
+                              </div>
+
+                              <div><span class="<%=`button${value._id}`%>"><button onClick="editTodo(event, '<%= value._id %>')"
+                                 >Edit</button> </span>
+                                 <button onClick="deleteTodo(event, '<%= value._id %>')">Delete</button></div>
+
+                          </div>
+                  </div>
+              <%});%>
+          <%}%>
+          </form>
+
+      </main>
+      <footer>
+        <%- include('./partials/footer'); %>
+      </footer>
+    </div>
+    <script src="/javascripts/script.js"></script>
+  </body>
+</html>
